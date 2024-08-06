@@ -67,7 +67,6 @@ async def modify_db():
         await command.init_db(safe=True)
     except FileExistsError:
         pass
-
     await command.init()
     await command.migrate()
     await command.upgrade(run_in_transaction=True)

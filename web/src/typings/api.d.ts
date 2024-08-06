@@ -108,6 +108,15 @@ declare namespace Api {
       roleHome: string;
     }>;
 
+    type Message = Common.CommonRecord<{
+      /** role name */
+      id: string;
+      /** role code */
+      content: string;
+      /** role description */
+      image: string;
+    }>;
+
     /** role add params */
     type RoleAddParams = Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'roleDesc' | 'roleHome' | 'status'>;
 
@@ -121,6 +130,9 @@ declare namespace Api {
 
     /** role list */
     type RoleList = Common.PaginatingQueryRecord<Role>;
+
+    /** message list */
+    type MessageList = Common.PaginatingQueryRecord<Message>;
 
     /** role authorized */
     type RoleAuthorized = Api.SystemManage.Role & { menuIds: number[]; apiIds: number[]; buttonIds: number[] };

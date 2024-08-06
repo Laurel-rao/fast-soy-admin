@@ -119,6 +119,51 @@ class APILog(BaseModel):
 
     class Meta:
         table = "api_logs"
+## 消息模型
+
+"""
+用户信息: 手机号, 邮箱, 微信ID
+消息渠道: 邮箱，短信，微信
+订阅表: 订阅号ID, 用户ID, 消息渠道1. 消息渠道2，消息渠道3
+消息表: 消息内容, 订阅号ID
+
+"""
 
 
-__all__ = ["User", "Role", "Api", "Menu", "Button", "Log", "APILog"]
+class Message(BaseModel, TimestampMixin):
+    id = fields.IntField(pk=True, description="用户ID")
+    content = fields.TextField(description="消息内容")
+    image = fields.CharField(max_length=255, unique=True, description="图片地址")
+    channel = fields.ForeignKeyField("app_system.Channel", on_delete=fields.SET_NULL, null=True,
+                                     related_name="channel")
+    status = fields.CharEnumField(enum_type=StatusType, default=StatusType.enable, description="状态")
+
+    class Meta:
+        table = "messages"
+
+
+class Channel(BaseModel, TimestampMixin):
+    id = fields.IntField(pk=True, description="角色ID")
+    userId = fields.OneToOneField("app_system.User", related_name="user")
+    is_email = fields.BooleanField(default=False, description="发送邮箱")
+    is_sms = fields.BooleanField(default=False, description="发送短信")
+    is_wx = fields.BooleanField(default=False, description="发送微信")
+    status = fields.CharEnumField(enum_type=StatusType, default=StatusType.enable, description="状态")
+
+    class Meta:
+        table = "channel"
+
+
+class SendLog(BaseModel, TimestampMixin):
+    id = fields.IntField(pk=True, description="发送消息日志ID")
+    function = fields.CharField(max_length=255, description="函数名")
+    status = fields.CharEnumField(enum_type=StatusType, default=StatusType.enable, description="状态")
+    message = fields.TextField(description="函数执行内容")
+    request_params = fields.JSONField(null=True, description="请求参数")
+    process_time = fields.FloatField(null=True, description="请求处理时间")
+
+    class Meta:
+        table = "send_logs"
+
+__all__ = ["User", "Role", "Api", "Menu", "Button", "Log",
+           "APILog","Message", "Channel", "SendLog"]

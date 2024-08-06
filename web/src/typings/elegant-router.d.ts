@@ -50,6 +50,7 @@ declare module "@elegant-router/types" {
     "manage_api": "/manage/api";
     "manage_log": "/manage/log";
     "manage_menu": "/manage/menu";
+    "manage_message": "/manage/message";
     "manage_role": "/manage/role";
     "manage_user": "/manage/user";
     "manage_user-detail": "/manage/user-detail/:id";
@@ -74,7 +75,7 @@ declare module "@elegant-router/types" {
 
   /**
    * custom route key
-   */ 
+   */
   export type CustomRouteKey = Extract<
     RouteKey,
     | "root"
@@ -95,7 +96,7 @@ declare module "@elegant-router/types" {
 
   /**
    * the generated route key
-   */ 
+   */
   export type GeneratedRouteKey = Exclude<RouteKey, CustomRouteKey>;
 
   /**
@@ -150,6 +151,7 @@ declare module "@elegant-router/types" {
     | "manage_api"
     | "manage_log"
     | "manage_menu"
+    | "manage_message"
     | "manage_role"
     | "manage_user-detail"
     | "manage_user"
