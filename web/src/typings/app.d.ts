@@ -489,6 +489,14 @@ declare namespace App {
               disable: string;
             };
           };
+          message: {
+            id: string;
+            content: string;
+            image: string;
+            status: string;
+            channelId: string;
+            title: string;
+          },
           role: {
             title: string;
             roleName: string;

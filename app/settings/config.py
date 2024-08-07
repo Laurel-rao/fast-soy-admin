@@ -29,10 +29,10 @@ class Settings(BaseSettings):
     TORTOISE_ORM: dict = {
         "connections": {
             # If an error occurs, you can try to delete the "migrations/app_system" folder and all tables, and then run the project again
-            "conn_system": {
-                "engine": "tortoise.backends.sqlite",
-                "credentials": {"file_path": f"{BASE_DIR}/db_system.sqlite3"},
-            },
+            # "conn_system": {
+            #     "engine": "tortoise.backends.sqlite",
+            #     "credentials": {"file_path": f"{BASE_DIR}/db_system.sqlite3"},
+            # },
 
             # you need to create a database named `fast-soy-admin` in your database before running the project
             # if you want to use PostgreSQL, you need to install tortoise-orm[asyncpg]
@@ -48,16 +48,16 @@ class Settings(BaseSettings):
             # },
 
             # if you want to use MySQL/MariaDB, you need to install tortoise-orm[asyncmy]
-            # "conn_system": {
-            #     "engine": "tortoise.backends.mysql",
-            #     "credentials": {
-            #         "host": "localhost",
-            #         "port": 63306,
-            #         "user": "sleep1223",
-            #         "password": "sleep1223",
-            #         "database": "fast-soy-admin"
-            #     }
-            # },
+            "conn_system": {
+                "engine": "tortoise.backends.mysql",
+                "credentials": {
+                    "host": "116.205.182.99",
+                    "port": 36666,
+                    "user": "root",
+                    "password": "se_cure_passwd",
+                    "database": "fast_admin"
+                }
+            },
 
             # if you want to use MSSQL/Oracle, you need to install tortoise-orm[asyncodbc]
             # "conn_book": {
