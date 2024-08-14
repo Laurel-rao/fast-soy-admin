@@ -144,8 +144,9 @@ class Message(BaseModel, TimestampMixin):
 
 class Channel(BaseModel, TimestampMixin):
     id = fields.IntField(pk=True, description="角色ID")
-    userId = fields.OneToOneField("app_system.User", related_name="user")
     is_email = fields.BooleanField(default=False, description="发送邮箱")
+    userId = fields.ForeignKeyField("app_system.User", on_delete=fields.SET_NULL, null=True,
+                                     related_name="userId")
     is_sms = fields.BooleanField(default=False, description="发送短信")
     is_wx = fields.BooleanField(default=False, description="发送微信")
     status = fields.CharEnumField(enum_type=StatusType, default=StatusType.enable, description="状态")

@@ -317,6 +317,14 @@ const local: App.I18n.Schema = {
           disable: '禁用'
         }
       },
+      message: {
+        id: "消息ID",
+        content: "消息内容",
+        image: "消息图片",
+        status: "消息状态",
+        channelId: "渠道ID",
+        title: "消息列表"
+      },
       role: {
         title: '角色列表',
         roleName: '角色名称',

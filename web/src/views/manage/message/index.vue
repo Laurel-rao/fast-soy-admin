@@ -28,19 +28,19 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     },
     {
       key: 'id',
-      title: $t('page.manage.role.roleName'),
+      title: $t('page.manage.message.id'),
       align: 'center',
       minWidth: 120
     },
     {
       key: 'content',
-      title: $t('page.manage.role.roleCode'),
+      title: $t('page.manage.message.content'),
       align: 'center',
       minWidth: 120
     },
     {
       key: 'status',
-      title: $t('page.manage.role.roleStatus'),
+      title: $t('page.manage.message.status'),
       align: 'center',
       width: 100,
       render: row => {
@@ -68,7 +68,6 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
           <NButton type="primary" ghost size="small" onClick={() => window.alert(row.id)}>
             {$t('common.edit')}
           </NButton>
-
         </div>
       )
     }
@@ -87,7 +86,7 @@ const {
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <NCard :title="$t('page.manage.role.title')+ '2'" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+    <NCard :title="$t('page.manage.message.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <NDataTable
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
