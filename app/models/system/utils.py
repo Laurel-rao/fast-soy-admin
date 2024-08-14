@@ -147,6 +147,10 @@ class LogDetailType(str, Enum):
     UserDeleteOne = "1614"
     UserBatchDeleteOne = "1615"
 
+    MessageGetList = "1701"
+    MessageCreateOne = "1712"
+    MessageUpdateOne = "1713"
+    MessageDeleteOne = "1714"
 
 class StatusType(str, Enum):
     enable = "1"
