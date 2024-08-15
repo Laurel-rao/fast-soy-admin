@@ -64,6 +64,28 @@ declare namespace Api {
     }
   }
 
+    /**
+   * namespace Message
+   *
+   * backend api module: "message"
+   */
+  namespace Message {
+    interface Message {
+      id: number;
+      content: string;
+      image: string;
+      channel: number;
+      status: string;
+    }
+
+    interface MessageCreate {
+      content: string;
+      image: string;
+      channel: number;
+      status: string;
+    }
+  }
+
   /**
    * namespace Route
    *
@@ -115,6 +137,8 @@ declare namespace Api {
       content: string;
       /** role description */
       image: string;
+      channelId: string;
+      status: string;
     }>;
 
     /** role add params */

@@ -3,7 +3,7 @@ from fastapi import APIRouter, Query
 from app.api.v1.utils import insert_log
 from app.controllers.message import message_controller
 
-from app.models.system import Message, StatusType
+from app.models.system import Message, StatusType, Channel
 from app.models.system import LogType, LogDetailType
 
 from app.schemas.base import Success, SuccessExtra
@@ -43,6 +43,7 @@ async def _():
 
 @router.post("/messages", summary="创建消息")
 async def _(post_data: MessageCreate):
+    post_data.channel = await Channel.get(id=post_data.channel)
     new_menu = await message_controller.create(obj_in=post_data)
     await insert_log(log_type=LogType.AdminLog, log_detail_type=LogDetailType.MessageCreateOne, by_user_id=0)
     return Success(msg="Created Successfully", data={"created_id": new_menu.id})

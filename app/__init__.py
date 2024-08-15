@@ -55,5 +55,5 @@ async def lifespan(_app: FastAPI):
         logger.info(f"App {_app.title} runtime: {runtime} seconds")  # noqa
         await Log.create(log_type=LogType.SystemLog, log_detail_type=LogDetailType.SystemStop)
 
-
+# 添加一个中间件捕获所有异常，并返回{"code": -1, "message": "{{error_message}}"}
 app = create_app()

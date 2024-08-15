@@ -495,7 +495,12 @@ declare namespace App {
             image: string;
             status: string;
             channelId: string;
-            title: string;
+            form: {
+              content: string;
+              image: string;
+              channelId: string;
+              status: string;
+            };
           },
           role: {
             title: string;

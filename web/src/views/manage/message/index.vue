@@ -1,10 +1,13 @@
 <script setup lang="tsx">
 import { NButton, NTag } from 'naive-ui';
-import { fetchGetMessageList } from '@/service/api';
+import {fetchBatchDeleteMenu, fetchGetMessageList} from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
 import { enableStatusRecord } from '@/constants/business';
+import {useBoolean} from "~/packages/hooks";
+import MessageOperateModal, {OperateType} from "@/views/manage/message/modules/message-operate-modal.vue";
+import {ref} from "vue";
 
 const appStore = useAppStore();
 
@@ -35,6 +38,12 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     {
       key: 'content',
       title: $t('page.manage.message.content'),
+      align: 'center',
+      minWidth: 120
+    },
+    {
+      key: 'channelId',
+      title: $t('page.manage.message.channelId'),
       align: 'center',
       minWidth: 120
     },
@@ -78,15 +87,36 @@ const {
   checkedRowKeys,
   // closeDrawer
 } = useTableOperate(data, getData);
+const { bool: visible, setTrue: openModal } = useBoolean();
+const operateType = ref<OperateType>('add');
+function handleAdd() {
+  operateType.value = 'add';
+  openModal();
+}
 
-
-
+async function handleBatchDelete() {
+  // request
+  const { error } = await fetchBatchDeleteMenu({ ids: checkedRowKeys.value });
+  if (!error) {
+    onBatchDeleted();
+  }
+}
 
 </script>
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <NCard :title="$t('page.manage.message.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+      <template #header-extra>
+        <TableHeaderOperation
+          v-model:columns="columnChecks"
+          :disabled-delete="checkedRowKeys.length === 0"
+          :loading="loading"
+          @add="handleAdd"
+          @delete="handleBatchDelete"
+          @refresh="getData"
+        />
+      </template>
       <NDataTable
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
@@ -100,8 +130,15 @@ const {
         :pagination="mobilePagination"
         class="sm:h-full"
       />
-
+      <MessageOperateModal
+        v-model:visible="visible"
+        :operate-type="operateType"
+        :row-data="editingData"
+        :all-pages="allPages"
+        @submitted="getData"
+      />
     </NCard>
+
   </div>
 </template>
 

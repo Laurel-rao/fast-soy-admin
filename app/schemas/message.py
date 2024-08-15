@@ -6,10 +6,10 @@ from app.models.system import IconType, MenuType
 
 
 class MessageBase(BaseModel):
-    content: str = Field(alias="content", description="菜单名称")
-    image: MenuType = Field(alias="image", description="菜单类型")
-    channel: str = Field(alias="channel", description="路由名称")
-    status: str = Field(alias="status", description="路由路径")
+    content: str = Field(alias="content", description="消息内容")
+    image: str = Field(alias="image", description="消息附图")
+    channel: int = Field(alias="channel", description="发送管道")
+    status: str = Field(alias="status", description="消息状态")
 
     class Config:
         allow_extra = True

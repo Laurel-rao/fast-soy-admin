@@ -133,7 +133,7 @@ class APILog(BaseModel):
 class Message(BaseModel, TimestampMixin):
     id = fields.IntField(pk=True, description="用户ID")
     content = fields.TextField(description="消息内容")
-    image = fields.CharField(max_length=255, unique=True, description="图片地址")
+    image = fields.CharField(max_length=255, unique=False, description="图片地址")
     channel = fields.ForeignKeyField("app_system.Channel", on_delete=fields.SET_NULL, null=True,
                                      related_name="channel")
     status = fields.CharEnumField(enum_type=StatusType, default=StatusType.enable, description="状态")

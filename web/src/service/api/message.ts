@@ -8,3 +8,12 @@ export function fetchGetMessageList(params?: Api.SystemManage.RoleSearchParams) 
     params
   });
 }
+
+/** add api */
+export function fetchAddMessage(data?: Api.Message.MessageCreate) {
+  return request<Api.Message.MessageCreate, 'json'>({
+    url: '/system-manage/messages',
+    method: 'post',
+    data
+  });
+}

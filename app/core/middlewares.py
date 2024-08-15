@@ -4,6 +4,7 @@ from json import JSONDecodeError
 import orjson
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
+from starlette.responses import JSONResponse
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 from .bgtask import BgTasks
@@ -22,7 +23,6 @@ class SimpleBaseMiddleware:
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
-
         await self.handle_http(scope, receive, send)
 
     async def handle_http(self, scope, receive, send) -> None:
@@ -88,8 +88,14 @@ class APILoggerMiddleware(BaseHTTPMiddleware):
                 request.state.api_log_id = api_log_obj.id
                 await Log.create(log_type=LogType.ApiLog, by_user=user_obj, api_log=api_log_obj)
 
-        response = await call_next(request)
-        return response
+        try:
+            return await call_next(request)
+        except Exception as e:
+            error_message = str(e)
+            return JSONResponse(
+                status_code=500,
+                content={"code": -1, "message": error_message},
+            )
 
 
 class APILoggerAddResponseMiddleware(SimpleBaseMiddleware):

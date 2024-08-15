@@ -318,12 +318,17 @@ const local: App.I18n.Schema = {
         }
       },
       message: {
-        id: "消息ID",
-        content: "消息内容",
-        image: "消息图片",
-        status: "消息状态",
-        channelId: "渠道ID",
-        title: "消息列表"
+        id: '消息ID',
+        content: '消息内容',
+        image: '消息图片',
+        status: '消息状态',
+        channelId: '渠道ID',
+        form: {
+          content: '请输入消息内容',
+          image: '请输入消息图片',
+          channelId: '请选择消息渠道',
+          status: '请输入消息内容'
+        }
       },
       role: {
         title: '角色列表',
