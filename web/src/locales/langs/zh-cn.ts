@@ -319,6 +319,7 @@ const local: App.I18n.Schema = {
       },
       message: {
         id: '消息ID',
+        title: '消息管理',
         content: '消息内容',
         image: '消息图片',
         status: '消息状态',

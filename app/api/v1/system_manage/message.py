@@ -7,7 +7,7 @@ from app.models.system import Message, StatusType, Channel
 from app.models.system import LogType, LogDetailType
 
 from app.schemas.base import Success, SuccessExtra
-from app.schemas.message import MessageCreate
+from app.schemas.message import MessageCreate, MessageUpdate
 
 router = APIRouter()
 
@@ -47,3 +47,10 @@ async def _(post_data: MessageCreate):
     new_menu = await message_controller.create(obj_in=post_data)
     await insert_log(log_type=LogType.AdminLog, log_detail_type=LogDetailType.MessageCreateOne, by_user_id=0)
     return Success(msg="Created Successfully", data={"created_id": new_menu.id})
+
+@router.patch("/messages", summary="修改消息")
+async def _(post_data: MessageUpdate):
+    post_data.channel = await Channel.get(id=post_data.channel)
+    message_obj = await message_controller.update(id=post_data.id, obj_in=post_data, exclude={"id"})
+    await insert_log(log_type=LogType.AdminLog, log_detail_type=LogDetailType.MessageUpdateOne, by_user_id=0)
+    return Success(msg="Updated Successfully", data={"updated_id": message_obj.id})

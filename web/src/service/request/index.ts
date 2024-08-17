@@ -103,9 +103,8 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
       let message = error.message;
       let backendErrorCode = '';
-
       // get backend error message and code
-      if (error.code === BACKEND_ERROR_CODE) {
+      if (error.code === BACKEND_ERROR_CODE || error.code === 'ERR_BAD_RESPONSE') {
         message = error.response?.data?.msg || message;
         backendErrorCode = error.response?.data?.code || '';
       }

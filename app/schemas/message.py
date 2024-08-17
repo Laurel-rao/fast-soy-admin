@@ -8,7 +8,7 @@ from app.models.system import IconType, MenuType
 class MessageBase(BaseModel):
     content: str = Field(alias="content", description="消息内容")
     image: str = Field(alias="image", description="消息附图")
-    channel: int = Field(alias="channel", description="发送管道")
+    channel: int = Field(alias="channel", description="发送管道Id")
     status: str = Field(alias="status", description="消息状态")
 
     class Config:
@@ -21,4 +21,4 @@ class MessageCreate(MessageBase):
 
 
 class MessageUpdate(MessageBase):
-    ...
+    id: int = Field(alias="id", description="消息ID")

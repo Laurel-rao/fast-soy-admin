@@ -30,8 +30,8 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       align: 'center'
     },
     {
-      key: 'id',
-      title: $t('page.manage.message.id'),
+      key: 'image',
+      title: $t('page.manage.message.image'),
       align: 'center',
       minWidth: 120
     },
@@ -74,7 +74,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       width: 130,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => window.alert(row.id)}>
+          <NButton type="primary" ghost size="small" onClick={() => handleUpdate(row)}>
             {$t('common.edit')}
           </NButton>
         </div>
@@ -89,8 +89,15 @@ const {
 } = useTableOperate(data, getData);
 const { bool: visible, setTrue: openModal } = useBoolean();
 const operateType = ref<OperateType>('add');
+const curData = ref<any>();
 function handleAdd() {
   operateType.value = 'add';
+  openModal();
+}
+
+function handleUpdate(row: Api.Message.Message) {
+  operateType.value = 'edit';
+  curData.value = row;
   openModal();
 }
 
@@ -133,8 +140,7 @@ async function handleBatchDelete() {
       <MessageOperateModal
         v-model:visible="visible"
         :operate-type="operateType"
-        :row-data="editingData"
-        :all-pages="allPages"
+        :cur-data="curData"
         @submitted="getData"
       />
     </NCard>

@@ -17,3 +17,11 @@ export function fetchAddMessage(data?: Api.Message.MessageCreate) {
     data
   });
 }
+/** update api */
+export function fetchUpdateMessage(data?: Api.Message.Message) {
+  return request<Api.Message.MessageCreate, 'json'>({
+    url: '/system-manage/messages',
+    method: 'patch',
+    data
+  });
+}

@@ -1,3 +1,4 @@
+import traceback
 from datetime import datetime
 from json import JSONDecodeError
 
@@ -91,6 +92,7 @@ class APILoggerMiddleware(BaseHTTPMiddleware):
         try:
             return await call_next(request)
         except Exception as e:
+            traceback.print_exc()
             error_message = str(e)
             return JSONResponse(
                 status_code=500,

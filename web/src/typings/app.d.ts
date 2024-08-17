@@ -491,6 +491,7 @@ declare namespace App {
           };
           message: {
             id: string;
+            title: string;
             content: string;
             image: string;
             status: string;

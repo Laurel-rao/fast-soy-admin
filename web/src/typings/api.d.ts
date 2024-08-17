@@ -77,6 +77,13 @@ declare namespace Api {
       channel: number;
       status: string;
     }
+    interface showMessage {
+      id: number;
+      content: string;
+      image: string;
+      channelId: number;
+      status: string;
+    }
 
     interface MessageCreate {
       content: string;

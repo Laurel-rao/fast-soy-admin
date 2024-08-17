@@ -1,9 +1,11 @@
+import traceback
 from typing import Any, Generic, NewType, TypeVar
 
 from pydantic import BaseModel
 from pydantic.main import IncEx
 from tortoise.expressions import Q
 from tortoise.models import Model
+from tortoise.transactions import atomic
 
 Total = NewType("Total", int)
 ModelType = TypeVar("ModelType", bound=Model)
@@ -32,8 +34,13 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             obj_dict = obj_in
         else:
             obj_dict = obj_in.model_dump(exclude_unset=True, exclude_none=True, exclude=exclude)
+        print(obj_dict)
         obj: ModelType = self.model(**obj_dict)
-        await obj.save()
+        try:
+            await obj.save()
+        except:
+            print(traceback.format_exc())
+            raise
         return obj
 
     async def update(self, id: int, obj_in: UpdateSchemaType | dict[str, Any], exclude: IncEx = None) -> ModelType:
